@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.rescuestation.mapper.PetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BasePetResultMap" type="com.example.rescuestation.entiy.Pet">
+        <id column="pet_id" property="petId" />
+        <result column="pet_name" property="petName" />
+        <result column="pet_type" property="petType" />
+        <result column="weight" property="weight" />
+        <result column="position" property="position" />
+        <result column="description" property="description" />
+
+    </resultMap>
+
+    <select id="selectAll" resultType="com.example.rescuestation.entiy.Pet">
+        select * from pet
+    </select>
+<!--
+pet_id,pet_name,pet_type,weight,position,description
+    Integer petId;
+    //宠物名
+    String petName;
+    //宠物种类
+    String petType;
+    //体重
+    String weight;
+    //发现地点
+    String position;
+    //相关描述
+    String description;-->
+
+<!--
+
+    <select id="selectUser" resultType="java.lang.Integer">
+        select count(1)
+        from user
+        where name = #{name} and password = #{password}
+    </select>
+
+    <insert id="insertUser" >
+        insert into user (name,password) values (#{name},#{password})
+    </insert>
+-->
+
+</mapper>

@@ -1,0 +1,21 @@
+#registers:hover,#toLogin:hover {
+    color: #2af598;
+
+}
+#log{
+    text-align: center;
+    margin-top: 6px;
+}
+#registers{
+    color: white;
+}
+#reg {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#registers,#toLogin {
+    color: white;
+}
+
+.form_code{ position:relative; }

@@ -3,7 +3,8 @@ package com.example.rescuestation.entiy;
 import java.io.Serializable;
 
 /**
- * @program: RescueStation
+ *
+ *@program: RescueStation
  * @author: KaKa
  * @create: 2021-06-21 21:01
  **/

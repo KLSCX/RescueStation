@@ -100,7 +100,7 @@
       $.ajax({
         url: '/register',
         type: 'post',
-        data:{name:username,password:password},
+        data:{username:username,password:password},
         success: function (d) {
           if (d == "success") {
             layer.msg("注册成功,请登录...",{icon: 6});

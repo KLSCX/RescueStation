@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+</head>
+<body>
+<div id="add-main">
+  <div class="my-form">
+    <form class="layui-form" lay-skin="line" >
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物id</label>
+        <div class="layui-input-inline">
+          <input type="text" name="id" lay-verify="required" id="id" placeholder="请输入宠物id" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="petName" lay-verify="required" id="petName" placeholder="请输入宠物名" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物类型</label>
+        <div class="layui-input-inline">
+          <input type="text" name="petType" lay-verify="required" id="petType" placeholder="请输入宠物类型" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物性别</label>
+        <div class="layui-input-inline">
+          <input type="text" name="sex" lay-verify="required" id="sex" placeholder="请输入宠物性别" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">图片路径</label>
+        <div class="layui-input-inline">
+          <input type="text" name="pic" lay-verify="required" id="pic" placeholder="请输入图片路径" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">领养状态</label>
+        <div class="layui-input-inline">
+          <input type="text" name="state" lay-verify="required" id="state" placeholder="请输入领养状态" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">领养人id</label>
+        <div class="layui-input-inline">
+          <input type="text" name="uid" lay-verify="required" id="uid" placeholder="请输入领养人id" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">描述信息</label>
+        <div class="layui-input-inline">
+          <input type="text" name="remark" lay-verify="required" id="remark" placeholder="请输入描述信息" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+    <!--  <label class="layui-form-label layui-icon">出生日期</label>
+      <div class="layui-input-inline">
+        <input type="text" name="birthday" class="layui-input" lay-verify="required"  autocomplete="off" id="test5" placeholder="yyyy-MM-dd HH:mm:ss">
+      </div>
+-->
+
+      <div class="layui-form-item my-form-item">
+        <div class="layui-input-block item">
+          <button class="layui-btn" lay-submit lay-filter="demo1">保存</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use(['form','laydate'],function () {
+    var table = layui.table;
+    var form = layui.form;
+    var layer = layui.layer;
+    var laydate = layui.laydate;
+    $ = layui.jquery;
+
+    laydate.render({
+      elem: '#test5'
+      ,type: 'datetime'
+    })
+
+    form.on('submit(demo1)', function () {
+      console.log("ergtrthrdhhgrf")
+      var id = $("#id").val();
+      var petName = $("#petName").val();
+      var petType = $("#petType").val();
+      var sex = $("#sex").val();
+      var birthday = $("#birthday").val();
+      var pic = $("#pic").val();
+      var state = $("#state").val();
+      var uid = $("#uid").val();
+      var remark = $("#remark").val();
+      $.ajax({
+        url: "/pet/add",      //这里换成自己的url即可
+        type: "get",
+        dataType: "json",
+        data: {
+          id: id,
+          petName: petName,
+          petType: petType,
+          sex: sex,
+          birthday: birthday,
+          pic: pic,
+          state: state,
+          uid: uid,
+          remark: remark
+        },
+       success: function (data) {
+          if (data == "success"){
+            console.log("chenggong")
+          }
+      }
+    })
+    })
+  });
+
+</script>
+</body>
+</html>

@@ -12,9 +12,16 @@ import java.util.List;
 
 @SpringBootTest
 class RescueStationApplicationTests {
+    @Autowired
+    private PetService petService;
 
     @Test
     void contextLoads() {
+        List<Pet> petList = petService.findAll();
+        for (Pet pet:
+             petList) {
+            System.out.println(pet.getId());
+        }
     }
 
 

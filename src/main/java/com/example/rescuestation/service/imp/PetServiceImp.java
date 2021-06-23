@@ -28,4 +28,32 @@ public class PetServiceImp implements PetService {
         return petMapper.selectAll();
 
     }
+
+    @Override
+    public List<Pet> findCount(int page, int limit) {
+        return petMapper.findCount(page,limit);
+    }
+
+    @Override
+    public Integer deleteById(int id) {
+        return  petMapper.deleteById(id);
+    }
+
+    @Override
+    public Integer insertPet(Integer id, String petName, String petType, Integer sex, String pic, Integer state, Integer uid, String remark) {
+        Integer res = petMapper.insertPet(id,petName,petType,sex,pic,state,uid,remark);
+        return res;
+    }
+
+    @Override
+    public Integer queryPet(Integer id) {
+        Integer res = petMapper.queryPet(id);
+        return res;
+    }
+
+    @Override
+    public Integer updatePet(Integer id, String petName, String petType, Integer sex, String pic, Integer state, Integer uid, String remark) {
+        Integer res = petMapper.updatePet(id,petName,petType,sex,pic,state,uid,remark);
+        return res;
+    }
 }

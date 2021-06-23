@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,9 +36,9 @@ public class UserController {
     @RequestMapping("/login")
     @ResponseBody
     public String login(User user, Model model, HttpSession session){
-    /*    System.out.println("username:"+user.getName());//
-        System.out.println("password:"+user.getPassword());//*/
-        boolean result = userService.queryUser(user.getName(),user.getPassword());
+        System.out.println("username:"+user.getUsername());//
+        System.out.println("password:"+user.getPassword());//
+        boolean result = userService.queryUser(user.getUsername(),user.getPassword());
         if (result){
             return  "success";
         }else {
@@ -51,7 +52,7 @@ public class UserController {
     @ResponseBody
     public String register(User user, HttpSession session){
         System.out.println("被调用了一次");
-        int rows = userService.InsertUser(user.getName(),user.getPassword());
+        int rows = userService.InsertUser(user.getUsername(),user.getPassword());
         System.out.println("row"+rows);
         if(rows==0){
             return "fail";
@@ -66,16 +67,69 @@ public class UserController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public Data list(){
+    public Data list(int page, int limit){
+        //获取全部学生信息
+        List<Pet> pets = petService.findAll();
+        //获取分页后的每页学生信息
+        int start = (page-1)*limit;
+        petService.findCount(start,limit);
+
         Data data1 = new Data();
         data1.setCode(0);
         data1.setMsg("");
-        data1.setCount(100);
-        List<Pet> data = petService.findAll();
-
+        data1.setCount(pets.size());
+        List<Pet> data = petService.findCount(start,limit);;
         data1.setData(data);
-        
         return data1;
+    }
+
+
+    @RequestMapping("/list/deleteById")
+    @ResponseBody
+    public String deleteById(int id){
+        System.out.println("调用了deleteById方法");
+
+        Integer count = petService.deleteById(id);
+
+        if(count == 0){
+            return "error";
+        }else if(count == 1){
+            return "success";
+        }else {
+            System.out.println("程序出现错误，数据库修改异常");
+            return "error";
+        }
+    }
+
+    @RequestMapping("/pet/save")
+    @ResponseBody
+    public int add(Pet pet){
+
+
+        Integer id = pet.getId();
+        String petName = pet.getPetName();
+        String petType = pet.getPetType();
+        Integer sex = pet.getSex();
+        String pic = pet.getPic();
+        Integer state = pet.getState();
+        Integer uid = pet.getUid();
+        String remark = pet.getRemark();
+        Integer count = petService.queryPet(id);
+
+        Integer res;
+        //查询不到id,说明是插入新数据
+        if (count == 0){
+            System.out.println("调用了add方法");
+            res = petService.insertPet(id,petName,petType,sex,pic,state,uid,remark);
+        }else {//查询到id，说明是更新数据
+            System.out.println("调用了update方法");
+            res = petService.updatePet(id,petName,petType,sex,pic,state,uid,remark);
+        }
+
+        if (res == 1){
+            return 200;
+        }
+        return  0;
     }
 
 }

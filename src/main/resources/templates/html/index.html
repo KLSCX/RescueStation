@@ -51,6 +51,14 @@
                     url = "/toPetEncyclopedia";
                     break;
 
+                case 'cxds':
+                    url = "/toPetShow";
+                    break;
+
+                case 'lyjd':
+                    url = "/toTable"
+                    break;
+
             }
             $("iframe").attr('src',url);
         }
@@ -103,7 +111,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a class="" href="javascript:;">发布消息</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">发布送养</a></dd>
@@ -117,9 +125,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">宠物基地</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">宠秀大赛</a></dd>
-                        <dd><a href="javascript:;">领养基地</a></dd>
-                        <dd><a href="javascript:;"></a></dd>
+                        <dd><a href="javascript:;" onclick="change('cxds')">宠秀大赛</a></dd>
+                        <dd><a href="javascript:;" onclick="change('lyjd')">领养基地</a></dd>
+                        <dd><a href="javascript:;">组织活动</a></dd>
                       <!--  <dd><a href="">超链接</a></dd>-->
                     </dl>
                 </li>

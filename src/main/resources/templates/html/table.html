@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="utf-8">
   <title>Layui</title>
@@ -13,57 +13,234 @@
 
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
+<div id="editUser" style="display:none;">
+  <div class="my-form">
+    <form class="layui-form" lay-skin="line" >
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物id</label>
+        <div class="layui-input-inline">
+          <input type="text" name="id" lay-verify="required" id="id" placeholder="请输入宠物id" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="petName" lay-verify="required" id="petName" placeholder="请输入宠物名" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物类型</label>
+        <div class="layui-input-inline">
+          <input type="text" name="petType" lay-verify="required" id="petType" placeholder="请输入宠物类型" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">宠物性别</label>
+        <div class="layui-input-inline">
+          <input type="text" name="sex" lay-verify="required" id="sex" placeholder="请输入宠物性别" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">图片路径</label>
+        <div class="layui-input-inline">
+          <input type="text" name="pic" lay-verify="required" id="pic" placeholder="请输入图片路径" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">领养状态</label>
+        <div class="layui-input-inline">
+          <input type="text" name="state" lay-verify="required" id="state" placeholder="请输入领养状态" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">领养人id</label>
+        <div class="layui-input-inline">
+          <input type="text" name="uid" lay-verify="required" id="uid" placeholder="请输入领养人id" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item my-form-item">
+        <label class="layui-form-label layui-icon">描述信息</label>
+        <div class="layui-input-inline">
+          <input type="text" name="remark" lay-verify="required" id="remark" placeholder="请输入描述信息" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+      <!--  <label class="layui-form-label layui-icon">出生日期</label>
+        <div class="layui-input-inline">
+          <input type="text" name="birthday" class="layui-input" lay-verify="required"  autocomplete="off" id="test5" placeholder="yyyy-MM-dd HH:mm:ss">
+        </div>
+  -->
+
+      <div class="layui-form-item my-form-item">
+        <div class="layui-input-block item">
+          <button class="layui-btn layui-btn-submit" lay-submit lay-filter="saveUser">保存</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
     <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
     <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    <button class="layui-btn layui-btn-sm layui-icon" lay-event="add">增加数据</button>
   </div>
 </script>
-<script type="text/html" id="barDemo">
+<script type="text/html" id="barDemo" lay-data="{width:200}">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
 
 <script>
-  layui.use('table', function(){
+
+
+  layui.use(['form','laydate','layer','table', 'jquery'],function(){
     var table = layui.table;
+    var form = layui.form;
+    var layer = layui.layer;
+    var laydate = layui.laydate;
+    $ = layui.jquery;
+
+    //日期时间选择器
+    laydate.render({
+      elem: '#test6'
+      ,type: 'datetime'
+    })
+
+    //日期时间选择器
+    laydate.render({
+      elem: '#test5'
+      ,type: 'datetime'
+    })
 
     //温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
     //详见：https://www.layui.com/doc/modules/table.html#totalRow
-    table.render({
+    var userTable = table.render({
       elem: '#test'
-      ,url:'../json/demo1.json'
+      ,url:'/list'
+      ,method:'post'
       ,toolbar: '#toolbarDemo'
       ,title: '用户数据表'
-      ,totalRow: true
+      ,limit:8
       ,cols: [
               [
         {type: 'checkbox', fixed: 'left'}
-        ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
-        ,{field:'username', title:'用户名', width:120, edit: 'text'}
-        ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
-            return '<em>'+ res.email +'</em>'
-          }}
-        ,{field:'experience', title:'积分', width:80, sort: true, totalRow: true}
-        ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
-        ,{field:'logins', title:'登入次数', width:100, sort: true, totalRow: true}
-        ,{field:'sign', title:'签名'}
-        ,{field:'city', title:'城市', width:100}
-        ,{field:'ip', title:'IP', width:120}
-        ,{field:'joinTime', title:'加入时间', width:120}
-        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+        ,{field:'petName', title:'宠物名', width:120, edit: 'text'}
+        ,{field:'petType', title:'宠物类型', width:150, edit: 'text'}
+        ,{field:'sex', title:'宠物性别', width:80, sort: true/*totalRow: true*/}
+        ,{field:'birthday', title:'出生日期', width:80, edit: 'text', sort: true,templet: function (d) {
+                  var date = new Date(d.birthday)
+                  var year = date.getFullYear() + '年';
+                  var month = date.getMonth() + 1 + '月';
+                  var date = date.getDate() + '日';
+                  var date1 = [year, month, date].join('')
+                  return date1;
+                }}
+        ,{field:'pic', title:'图片', width:100, sort: true/* totalRow: true*/}
+        ,{field:'state', title:'是否被申请领养'}
+        ,{field:'uid', title:'领养人', width:100}
+        ,{field:'remark', title:'描述', width:120}
+        ,{field:'gmt_create', title:'创建时间', width:120,templet: function (d) {
+                  var date = new Date(d.birthday)
+                  var year = date.getFullYear() + '年';
+                  var month = date.getMonth() + 1 + '月';
+                  var date = date.getDate() + '日';
+                  var date1 = [year, month, date].join('')
+                  return date1;
+                }}
+        ,{field:'gmt_modified', title:'修改时间', width:120,templet: function (d) {
+                  var date = new Date(d.birthday)
+                  var year = date.getFullYear() + '年';
+                  var month = date.getMonth() + 1 + '月';
+                  var date = date.getDate() + '日';
+                  var date1 = [year, month, date].join('')
+                  return date1;
+                }}
+        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
       ]
       ]
-      ,page: true
+      ,page: {
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
+        ,limits:[5,10,15]
+        ,first: false //不显示首页
+        ,last: false //不显示尾页
+      }
     });
+    //监听工具条
+    table.on('tool(test)', function(obj) {
+      const data = obj.data;
+      if (obj.event === 'detail') {
+        layer.msg('ID：' + data.id + ' 的查看操作');
+      } else if (obj.event === 'del') {
+        layer.confirm('真的删除行么', function (index) {
+          deleteById(data);
+          obj.del();
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        //layer.alert('编辑行：<br>' + JSON.stringify(data))
+        // 修改
+        if (obj.event === 'edit') {
+
+          $("#id").val(data.id);
+          $("#petName").val(data.petName);
+          $("#petType").val(data.petType);
+          $("#sex").val(data.sex);
+          $("#birthday").val(data.birthday);
+          $("#pic").val(data.pic);
+          $("#state").val(data.state);
+          $("#uid").val(data.uid);
+          $("#remark").val(data.remark );
+          layer.open({
+            type: 1,
+            offset: '10px',
+            title: "修改用户",
+            area: ['500px', '400px'],
+            content: $("#editUser")
+          });
+        }
+      }
+    });
+
+    //删除
+    function deleteById(data){
+      console.log("调用deleteById方法")
+      console.log(data.id)
+      $.ajax({
+        type: 'get',
+        url: '/list/deleteById',
+        async: false, //改为同步请求
+        data: {id:data.id},
+        success: function (res) {
+          console.log("从后台获取"+res)
+          if (res=="error") {
+            //message = "用户名或密码错误，请重新输入";
+            console.log("error")
+          }else {
+            console.log("success")
+          }
+        }
+      });
+    }
+
 
     //工具栏事件
     table.on('toolbar(test)', function(obj){
+      var data1 = obj.data;
       var checkStatus = table.checkStatus(obj.config.id);
       switch(obj.event){
         case 'getCheckData':
@@ -77,105 +254,69 @@
         case 'isAll':
           layer.msg(checkStatus.isAll ? '全选': '未全选')
           break;
+        case 'add':
+
+          layer.open({
+            type: 1,
+            offset: '10px',
+            title: "新增宠物信息",
+            area: ['500px', '400px'],
+            content: $("#editUser")
+          });
+          break;
       };
     });
+
+    form.on('submit(saveUser)', function(data){
+
+      let id = $("#id").val();
+      let petName = $("#petName").val();
+      let petType = $("#petType").val();
+      let sex = $("#sex").val();
+      let birthday = $("#birthday").val();
+      let pic = $("#pic").val();
+      let state = $("#state").val();
+      let uid =  $("#uid").val();
+      let remark = $("#remark").val();
+
+      layer.alert(JSON.stringify(data.field));
+      $.ajax({
+        url: '/pet/save',
+        type: 'get',
+        contentType: "application/json",
+        dataType: "json",
+        data: {
+          id: id,
+          petName: petName,
+          petType: petType,
+          sex: sex,
+          birthday: birthday,
+          pic: pic,
+          state: state,
+          uid: uid,
+          remark: remark
+        },
+        //data: JSON.stringify(data.field),
+        success: function (result) {
+          console.log(result)
+          if (result == 200) {
+            setTimeout(function () {
+              layer.closeAll();//关闭所有的弹出层
+              userTable.reload();
+            }, 300);
+          } else {
+            layer.msg("操作失败！", {icon: 5});
+          }
+        }
+      });
+
+      return false;
+
+    });
+
+
   });
 </script>
 
 </body>
 </html>
-
-
-<!--  &lt;!&ndash; 内容主体区域 &ndash;&gt;
-  <table class="layui-hide" id="test" lay-filter="test"></table>
-
-  <script type="text/html" id="toolbarDemo">
-      <div class="layui-btn-container">
-          <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-          <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-          <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-      </div>
-
-
-  </script>
-  <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-  </script>
-
-
-  <script src="../layui/layui.js" charset="utf-8"></script>
-  &lt;!&ndash; 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 &ndash;&gt;
-
-  <script>
-      layui.use('table', function(){
-          var table = layui.table;
-
-          //温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
-          //详见：https://www.layui.com/doc/modules/table.html#totalRow
-          table.render({
-              elem: '#test'
-              ,url:'http://localhost:8888/list'
-              ,toolbar: '#toolbarDemo'
-              ,title: '用户数据表'
-              ,totalRow: true
-              ,cols: [[
-          {type: 'checkbox', fixed: 'left'}
-                  ,{field:'petId', title:'宠物编号', width:120}
-                  ,{field:'petName', title:'宠物名', width:120}
-                  ,{field:'petType', title:'宠物种类', width:120}
-                  ,{field:'weight', title:'体重', width:120}
-                  ,{field:'position', title:'发现地点', width:120}
-                  ,{field:'description', title:'相关描述', width:120}
-              /*    ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
-                  ,{field:'username', title:'用户名', width:120, edit: 'text'}
-                  ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
-                          return '<em>'+ res.email +'</em>'
-                      }}
-                  ,{field:'experience', title:'积分', width:80, sort: true, totalRow: true}
-                  ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
-                  ,{field:'logins', title:'登入次数', width:100, sort: true, totalRow: true}
-                  ,{field:'sign', title:'签名'}
-                  ,{field:'city', title:'城市', width:100}
-                  ,{field:'ip', title:'IP', width:120}
-                  ,{field:'joinTime', title:'加入时间', width:120}
-                  ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}*/
-              ]]
-              ,page: true
-          });
-
-          //监听工具条
-          table.on('tool(test)', function(obj){
-              var data = obj.data;
-              if(obj.event === 'detail'){
-                  layer.msg('ID：'+ data.id + ' 的查看操作');
-              } else if(obj.event === 'del'){
-                  layer.confirm('真的删除行么', function(index){
-                      obj.del();
-                      layer.close(index);
-                  });
-              } else if(obj.event === 'edit'){
-                  layer.alert('编辑行：<br>'+ JSON.stringify(data))
-              }
-          });
-
-
-          //工具栏事件
-          table.on('toolbar(test)', function(obj){
-              var checkStatus = table.checkStatus(obj.config.id);
-              switch(obj.event){
-                  case 'getCheckData':
-                      var data = checkStatus.data;
-                      layer.alert(JSON.stringify(data));
-                      break;
-                  case 'getCheckLength':
-                      var data = checkStatus.data;
-                      layer.msg('选中了：'+ data.length + ' 个');
-                      break;
-                  case 'isAll':
-                      layer.msg(checkStatus.isAll ? '全选': '未全选')
-                      break;
-              };
-          });
-      });
-  </script>-->

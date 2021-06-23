@@ -37,7 +37,7 @@ public class LoginController {
         return "html/preLogin";
     }
 
-    @RequestMapping("table")
+    @RequestMapping("toTable")
     public String table(){ return "html/table";}
 
     @RequestMapping("toPetEncyclopedia")
@@ -47,12 +47,27 @@ public class LoginController {
 
     @RequestMapping("toWishingWall")
     public String wishingWall(){
-        return "html/wishingWall.html";
+        return "html/wishingWall";
     }
 
     @RequestMapping("toAdoptionNotice")
     public String adoptionNotice(){
         return "html/adoptionNotice";
+    }
+
+    @RequestMapping("toPetShow")
+    public String petShow(){
+        return "html/petShow";
+    }
+
+    @RequestMapping("toIndex")
+    public String toIndex(){
+        return "html/index";
+    }
+
+    @RequestMapping("toPetAdd")
+    public String toPetAdd(){
+        return "html/petAdd";
     }
 
  /*   @RequestMapping("index")
